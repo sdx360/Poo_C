@@ -1,1 +1,11 @@
 Primera version
+
+{
+	"cmd": ["gcc '${file}' -o '${file_base_name}' -lm -Wall &&     './${file_base_name}'"],
+	"file_regex": "^[ ]*File \"(...*?)\", line ([0-9]*)",
+	"selector" : "source.c",
+	"shell":false,
+	"working_dir": "${file_path}"
+	
+	
+}
