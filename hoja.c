@@ -167,128 +167,156 @@ int main (int argc, char** argv){
  		printf(">> ");
  		fgets(operacion,50,stdin);
  		operacion[strlen(operacion)-1]='\0';
- 		printf("%s %s", operacion,"\n");
-
- 		for (i = 0; i < strlen(operacion); ++i)
- 		{
-
- 			if(isalpha((unsigned char)operacion[i])!=0&&flag==0)
- 			{
- 					temp[ 0 ] = operacion[i]; 
-					temp[ 1 ] = '\0'; 
- 					strcat(aux,temp);
- 			}
- 			else if(operation(aux)==1)
- 			{
- 				if(operacion[i]==')'&&(flag==4||flag==2))
- 				{
-	 				if ((opc==1||opc==4)&&flag!=2)
-	 				{
-	 					if(flag_p==1){
-	 						flag=5;
-	 					}
-	 					else{
-	 						flag=-1;
-	 						printf(">>Error #3 -----------------------------------------------------Sintaxis Erronea\n");
-	 						break;
-	 					}
-	 				}
-	 				else{
-	 					if(flag==2){flag_p=-1;}
-	 					flag=5;
-	 				}	
- 				}
- 				else if(operacion[i]=='('){
- 					flag=2;
- 				}
- 				else if(flag<5)
- 				{
- 					if(isdigit((unsigned char)operacion[i])!=0){
- 						temp[ 0 ] = operacion[i]; 
-						temp[ 1 ] = '\0'; 
- 						int sum=atoi(temp);
- 						if(sum<=5){
- 							fila[flag_p]=sum-1;
- 							flag=4;
- 						}
- 						else{
- 							printf(">>Error #2 -----------------------------------------------------Rango incorrecto\n");
- 							flag=-1;
- 						}
- 					}
- 					else if(operacion[i]==':'&&flag==4){
- 						flag_p=1;
- 					}
- 					else{
- 						switch(operacion[i]){
-	 						case 'A':
-	 							columna[flag_p]=0;
-	 							flag=3;
-	 						break;
-	 						case 'B':
-	 							columna[flag_p]=1;
-	 							flag=3;
-	 						break;
-	 						case 'C':
-	 							columna[flag_p]=2;
-	 							flag=3;
-	 						break;
-	 						case 'D':
-	 							columna[flag_p]=3;
-	 							flag=3;
-	 						break;
-	 						case 'E':
-	 							columna[flag_p]=4;
-	 							flag=3;
-	 						break;
-	 						default:
-	 							printf(">>Error #2 -----------------------------------------------------Rango incorrecto\n");
-	 							flag=-1;
- 						}
- 					}	
- 				}
- 				else{
- 					
-	 				if(operacion[i]==';')
-	 				{
-	 					flag=7;	
-	 				}
-	 				else if((operacion[i]==' '||isdigit((unsigned char)operacion[i])!=0)&&flag==5&&opc==3)
-	 				{
-	 					for (k = i; k <strlen(operacion)-1; k++)
-	 					{
-	 						temp[ 0 ] = operacion[k]; 
-							temp[ 1 ] = '\0'; 
- 							strcat(aux2,temp);
- 							i=k;
-	 					}
-	 					number1=atof(aux2);
-	 					if(number1!=0){
-	 						flag=6;
-	 					}
-	 					else{
-	 						printf(">>Error #3 -----------------------------------------------------Sintaxis Erronea\n");
-	 						flag=-1;
-	 					}
-					}
-	 				else{
-	 					printf(">>Error #3 -----------------------------------------------------Sintaxis Erronea\n");
-	 					flag=-1;
-	 				}
- 				}
- 			}
- 			if(flag==-1){
-				break;
- 			}
- 		}
- 		if(flag==0){printf(">>Error #1 -----------------------------------------------------Operacion Invalida\n");}
  		
- 		if(flag==7){
- 			procesar(flag_p,number1);
+ 		if(strlen(operacion)!=0){
+ 				for (i = 0; i < strlen(operacion); ++i)
+		 		{
+
+		 			if(isalpha((unsigned char)operacion[i])!=0&&flag==0)
+		 			{
+		 					temp[ 0 ] = operacion[i]; 
+							temp[ 1 ] = '\0'; 
+		 					strcat(aux,temp);
+		 			}
+		 			else if(operation(aux)==1)
+		 			{
+		 				if(operacion[i]==')'&&(flag==4||flag==2))
+		 				{
+			 				if ((opc==1||opc==4)&&flag!=2)
+			 				{
+			 					if(flag_p==1){
+			 						flag=5;
+			 					}
+			 					else{
+			 						flag=-1;
+			 						printf(">>Error #3 -----------------------------------------------------Sintaxis Erronea\n");
+			 						break;
+			 					}
+			 				}
+			 				else{
+			 					if(flag==2){flag_p=-1;}
+			 					flag=5;
+			 				}	
+		 				}
+		 				else if(operacion[i]=='('){
+		 					flag=2;
+		 				}
+		 				else if(flag<5)
+		 				{
+		 					if(isdigit((unsigned char)operacion[i])!=0){
+		 						temp[ 0 ] = operacion[i]; 
+								temp[ 1 ] = '\0'; 
+		 						int sum=atoi(temp);
+		 						if(sum<=5){
+		 							fila[flag_p]=sum-1;
+		 							flag=4;
+		 						}
+		 						else{
+		 							printf(">>Error #2 -----------------------------------------------------Rango incorrecto\n");
+		 							flag=-1;
+		 						}
+		 					}
+		 					else if(operacion[i]==':'&&flag==4){
+		 						flag_p=1;
+		 					}
+		 					else{
+		 						switch(operacion[i]){
+			 						case 'A':
+			 							columna[flag_p]=0;
+			 							flag=3;
+			 						break;
+			 						case 'B':
+			 							columna[flag_p]=1;
+			 							flag=3;
+			 						break;
+			 						case 'C':
+			 							columna[flag_p]=2;
+			 							flag=3;
+			 						break;
+			 						case 'D':
+			 							columna[flag_p]=3;
+			 							flag=3;
+			 						break;
+			 						case 'E':
+			 							columna[flag_p]=4;
+			 							flag=3;
+			 						break;
+			 						default:
+			 							printf(">>Error #2 -----------------------------------------------------Rango incorrecto\n");
+			 							flag=-1;
+		 						}
+		 					}	
+		 				}
+		 				else{
+		 					
+			 				if(operacion[i]==';')
+			 				{
+			 					if(opc==3&&number1==0){
+			 						flag=-1;
+			 						printf(">>Error #3 -----------------------------------------------------Sintaxis Erronea\n");
+			 					}
+			 					else{
+			 						flag=7;	
+			 					}
+			 					
+			 				}
+			 				else if((operacion[i]=='-'||operacion[i]==' '||isdigit((unsigned char)operacion[i])!=0)&&flag==5&&opc==3)
+			 				{
+			 					int cont=0;
+			 					for (k = i; k <strlen(operacion)-1; k++)
+			 					{
+			 						
+		 							if(isdigit((unsigned char)operacion[k])!=0||operacion[k]=='.'){
+		 								temp[ 0 ] = operacion[k]; 
+										temp[ 1 ] = '\0'; 
+			 							strcat(aux2,temp);
+			 							i=k;
+			 							if(operacion[k]=='.'){
+			 								cont++;
+
+			 							}
+			 							if(cont>=2){
+			 								flag=-1;
+			 								break;
+			 							}
+			 						}
+		 							else{
+		 								flag=-1;
+		 								break;
+		 							}
+			 					}
+
+			 					if(flag!=-1){
+			 						number1=atof(aux2);
+			 						flag=6;
+			 					}
+			 					else{
+			 						printf(">>Error #3 -----------------------------------------------------Sintaxis Erronea\n");
+			 						
+			 					}
+							}
+			 				else{
+			 					printf(">>Error #3 -----------------------------------------------------Sintaxis Erronea\n");
+			 					flag=-1;
+			 				}
+		 				}
+		 			}
+		 			if(flag==-1){
+						break;
+		 			}
+		 		}
+		 	if(flag==0){printf(">>Error #1 -----------------------------------------------------Operacion Invalida\n");}
+ 			else{
+	 			if(flag==7){
+	 				procesar(flag_p,number1);
+		 		}
+		 		else if(flag!=-1){
+		 			printf(">>Error #3 -----------------------------------------------------Sintaxis Erronea\n");
+			 	}
+ 			}
+
  		}
- 		else{
- 			printf(">>Error #3 -----------------------------------------------------Sintaxis Erronea\n");
-	 	}
+ 		
  	} while (flag!=-2);
  	
   return 0;
