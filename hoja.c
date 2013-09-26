@@ -4,8 +4,9 @@
 #include <string.h>
 #include <ctype.h>
 float hoja[5][5];
-int fila [2]={0,5};
-int columna [2]={0,5};
+int fila [2]={0,4};
+int columna [2]={0,4};
+int opc=0;
 void print_hoja(){
 	int i,k;
 	printf("\t\t A\t B\t C\t D\t E\n");
@@ -18,135 +19,189 @@ void print_hoja(){
 		}
 		printf("\n");
 	}
-
 }
-float procesar(int opc,int flag_p,int number1){
+void procesar(int flag_p,int number1)
+{
 	int i,k;
-	float resultado;
-	printf("\t%d%s", opc,"\n");
-	switch(opc){
-		case 5:
-			
-				for (i = fila[0]; i <fila[1]; ++i)
-				{
-					
-					for (k = columna[0]; k < columna[1]; ++k)
-					{
-						resultado+=hoja[i][k];
+	float resultado=0;
+	switch(opc)
+	{
+		case 1:
+					if(flag_p==0){
+						printf(">>Error #2 -----------------------------------------------------Rango incorrecto\n");
 					}
-					
-				}
-				return resultado;
-			
-		
+					else if((columna [0]<columna [1]&&fila[0]==fila[1])||(columna [0]==columna [1]&&fila[0]<fila[1])||flag_p==-1)
+					{
+						for (i = fila[0]; i <=fila[1]; i++)
+						{
+						
+							for (k = columna[0]; k <=columna[1]; k++)
+							{
+								resultado+=hoja[i][k];
+							}
+						}
+						printf(">>Resultado -----------------------------------------------------%.2f%s",resultado,"\n\n");
+					}
+					else
+					{
+						printf(">>Error #2 -----------------------------------------------------Rango incorrecto\n");
+					}
 			break;
-		case 6:
-			break;
-		case 8:
-				if(flag_p==1){
-					hoja[0][0]=number1;
+		case 2:
+				if(flag_p==0){
+					hoja[fila[0]][columna[0]]=0;
 				}
-				else{
-					for (i = fila[0]; i <fila[1]; ++i)
+				else if((columna [0]<columna [1]&&fila[0]==fila[1])||(columna [0]==columna [1]&&fila[0]<fila[1])||flag_p==-1)
+				{
+					for (i = fila[0]; i <=fila[1]; i++)
 					{
 					
-						for (k = columna[0]; k < columna[1]; ++k)
+						for (k = columna[0]; k <=columna[1]; k++)
+						{
+							hoja[i][k]=0;
+						}
+					}
+					print_hoja();
+				}
+				else
+				{
+					printf(">>Error #2 -----------------------------------------------------Rango incorrecto\n");
+				}
+			break;
+		case 3:
+				if(flag_p==0){
+					hoja[fila[0]][columna[0]]=number1;
+				}
+				else if((columna [0]<columna [1]&&fila[0]==fila[1])||(columna [0]==columna [1]&&fila[0]<fila[1])||flag_p==-1)
+				{
+					for (i = fila[0]; i <=fila[1]; i++)
+					{
+					
+						for (k = columna[0]; k <=columna[1]; k++)
 						{
 							hoja[i][k]=number1;
 						}
-					
 					}
+					print_hoja();
 				}
-				
-				return resultado;
-<<<<<<< HEAD
-
+				else
+				{
+					printf(">>Error #2 -----------------------------------------------------Rango incorrecto\n");
+				}
 			break;
-		case 11:
+		case 4:
+				resultado=1;
+					if(flag_p==0){
+						printf("Sintaxis Erronea\n");
+					}
+					else if((columna [0]<columna [1]&&fila[0]==fila[1])||(columna [0]==columna [1]&&fila[0]<fila[1])||flag_p==-1)
+					{
+
+						for (i = fila[0]; i <fila[1]; i++)
+						{
+						
+							for (k = columna[0]; k < columna[1]; k++)
+							{
+								resultado*=hoja[i][k];
+							}
+						}
+						printf(">>Resultado -----------------------------------------------------%.2f%s",resultado,"\n\n");
+					}
+					else{
+						printf(">>Error #2 -----------------------------------------------------Rango incorrecto\n");
+					}
 			break;
 		default:
-		printf("Operacion no valida \n");
+		printf(">>Error #1 -----------------------------------------------------Operacion Invalida\n");
 	}
+	return ;
 
-	return 0;
-
-=======
-
-			break;
-		case 11:
-			break;
-		default:
-		printf("Operacion no valida \n");
-	}
-
-	return 0;
-
->>>>>>> 1aceadc1c42710d1d573561c244f73fe833272c2
 }
+int operation(char aux[]) {
+
+	if(strncmp(aux,"sumar",strlen(aux))==0&&strncmp(aux,"sumar",5)==0)
+	{
+		opc=1;
+		return 1;
+	}
+	else if(strncmp(aux,"multiplicar",strlen(aux))==0&&strncmp(aux,"multiplicar",11)==0)
+	{
+		opc=4;
+		return 1;
+	}
+	else if(strncmp(aux,"borrar",strlen(aux))==0&&strncmp(aux,"borrar",6)==0)
+	{
+		opc=2;
+		return 1;
+	}
+	else if(strncmp(aux,"insertar",strlen(aux))==0&&strncmp(aux,"insertar",8)==0)
+	{
+		opc=3;
+		return 1;
+	}
+	else{return 0;}
+	} 
+
 
 int main (int argc, char** argv){
 	int flag,i,k,flag_p=0;
 	char operacion[50];
-	
-	
 	char temp[ 2 ]; 
  	system("clear");
+ 	print_hoja();
+ 	printf("Elegir opcion \tINSERTAR  BORRAR  SUMAR  MULTIPLICAR\n");
  	do
  	{
  		flag=0;
- 		flag_p=-1;
+ 		opc=0;
+ 		flag_p=0;
+ 		columna[0]=0;
+ 		columna[1]=4;
+ 		fila[0]=0;
+ 		fila[1]=4;
  		float number1=0;
  		char aux[20]="";
  		char aux2[20]="";
- 		print_hoja();
- 		printf("Elegir opcion \tINSERTAR  BORRAR  SUMAR  MULTIPLICAR\n");
  		printf(">> ");
  		fgets(operacion,50,stdin);
  		operacion[strlen(operacion)-1]='\0';
  		printf("%s %s", operacion,"\n");
 
-
  		for (i = 0; i < strlen(operacion); ++i)
  		{
 
- 			if(isalpha(operacion[i])!=0&&flag==0){
+ 			if(isalpha((unsigned char)operacion[i])!=0&&flag==0)
+ 			{
  					temp[ 0 ] = operacion[i]; 
 					temp[ 1 ] = '\0'; 
  					strcat(aux,temp);
-
- 				
  			}
- 			else if(strncmp(aux,"sumar",strlen(aux))==0||strncmp(aux,"multiplicar",strlen(aux))==0||strncmp(aux,"borrar",strlen(aux))==0||strncmp(aux,"insertar",strlen(aux))==0)
+ 			else if(operation(aux)==1)
  			{
-
- 				
- 				
- 				if(operacion[i]==')'&&(flag==4||flag==2)){
-	 				if (((strncmp(aux,"sumar",strlen(aux))==0)||strncmp(aux,"multiplicar",strlen(aux))==0)&&flag!=2)
+ 				if(operacion[i]==')'&&(flag==4||flag==2))
+ 				{
+	 				if ((opc==1||opc==4)&&flag!=2)
 	 				{
 	 					if(flag_p==1){
 	 						flag=5;
 	 					}
 	 					else{
 	 						flag=-1;
-	 						printf("Sintaxis Erronea \n");
+	 						printf(">>Error #3 -----------------------------------------------------Sintaxis Erronea\n");
 	 						break;
-	 						
 	 					}
 	 				}
 	 				else{
+	 					if(flag==2){flag_p=-1;}
 	 					flag=5;
-	 				}
-	 				
-	 				
+	 				}	
  				}
  				else if(operacion[i]=='('){
- 				flag=2;
+ 					flag=2;
  				}
  				else if(flag<5)
  				{
- 					
- 					if(isdigit(operacion[i])!=0){
+ 					if(isdigit((unsigned char)operacion[i])!=0){
  						temp[ 0 ] = operacion[i]; 
 						temp[ 1 ] = '\0'; 
  						int sum=atoi(temp);
@@ -155,62 +210,49 @@ int main (int argc, char** argv){
  							flag=4;
  						}
  						else{
- 							printf("Fuera de rango numerico \n");
+ 							printf(">>Error #2 -----------------------------------------------------Rango incorrecto\n");
  							flag=-1;
  						}
- 						
  					}
  					else if(operacion[i]==':'&&flag==4){
  						flag_p=1;
- 						
  					}
  					else{
  						switch(operacion[i]){
- 						case 'A':
- 							flag_p=0;
- 							columna[flag_p]=0;
- 							flag=3;
- 						break;
- 						case 'B':
- 							flag_p=0;
- 							columna[flag_p]=1;
- 							flag=3;
- 							
- 						break;
- 						case 'C':
- 							flag_p=0;
- 							columna[flag_p]=2;
- 							flag=3;
- 						break;
- 						case 'D':
- 							flag_p=0;
- 							columna[flag_p]=3;
- 							flag=3;
- 						break;
- 						case 'E':
- 							flag_p=0;
- 							columna[flag_p]=4;
- 							flag=3;
- 						break;
- 						default:
- 							printf("Fuera de rango \n");
- 							flag=-1;
+	 						case 'A':
+	 							columna[flag_p]=0;
+	 							flag=3;
+	 						break;
+	 						case 'B':
+	 							columna[flag_p]=1;
+	 							flag=3;
+	 						break;
+	 						case 'C':
+	 							columna[flag_p]=2;
+	 							flag=3;
+	 						break;
+	 						case 'D':
+	 							columna[flag_p]=3;
+	 							flag=3;
+	 						break;
+	 						case 'E':
+	 							columna[flag_p]=4;
+	 							flag=3;
+	 						break;
+	 						default:
+	 							printf(">>Error #2 -----------------------------------------------------Rango incorrecto\n");
+	 							flag=-1;
  						}
- 					}
- 					
- 					
+ 					}	
  				}
  				else{
  					
 	 				if(operacion[i]==';')
 	 				{
-	 					//printf("Lectura completada %c%s", operacion[i],"\n");
 	 					flag=7;	
 	 				}
-	 				else if(operacion[i]==' '&&flag==5)
+	 				else if((operacion[i]==' '||isdigit((unsigned char)operacion[i])!=0)&&flag==5&&opc==3)
 	 				{
-	 					
-	 					
 	 					for (k = i; k <strlen(operacion)-1; ++k)
 	 					{
 	 						temp[ 0 ] = operacion[k]; 
@@ -221,35 +263,31 @@ int main (int argc, char** argv){
 	 					printf("%.s", aux2);
 	 					number1=atof(aux2);
 	 					if(number1!=0){
-	 						printf("%.2f", number1);
 	 						flag=6;
 	 					}
 	 					else{
-	 						printf("Sintaxis Erronea\n");
+	 						printf(">>Error #3 -----------------------------------------------------Sintaxis Erronea\n");
 	 						flag=-1;
 	 					}
-
-
-	 					
-	 				}
+					}
 	 				else{
-	 					printf("Sintaxis Erronea\n");
+	 					printf(">>Error #3 -----------------------------------------------------Sintaxis Erronea\n");
 	 					flag=-1;
 	 				}
-	 				
-	 				
- 				
  				}
  			}
-
+ 			if(flag==-1){
+				break;
+ 			}
  		}
- 		if(flag==0){printf("Operacion no valida \n");}
+ 		if(flag==0){printf(">>Error #1 -----------------------------------------------------Operacion Invalida\n");}
  		
  		if(flag==7){
- 			procesar(strlen(aux),flag_p,number1);
+ 			procesar(flag_p,number1);
  		}
-
-
+ 		else{
+ 			printf(">>Error #3 -----------------------------------------------------Sintaxis Erronea\n");
+	 	}
  	} while (flag!=-2);
  	
   return 0;
