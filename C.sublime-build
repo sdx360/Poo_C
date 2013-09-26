@@ -1,0 +1,16 @@
+For Windows:
+
+{
+"cmd" : ["gcc", "$file_name", "-o", "${file_base_name}.exe", "-lm", "-Wall"],
+"selector" : "source.c",
+"shell":true,
+"working_dir" : "$file_path"
+}
+For Linux:
+
+{
+"cmd" : ["gcc", "$file_name", "-o", "${file_base_name}", "-lm", "-Wall"],
+"selector" : "source.c",
+"shell":false,
+"working_dir" : "$file_path"
+}

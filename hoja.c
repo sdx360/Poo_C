@@ -59,6 +59,7 @@ float procesar(int opc,int flag_p,int number1){
 				}
 				
 				return resultado;
+<<<<<<< HEAD
 
 			break;
 		case 11:
@@ -69,6 +70,18 @@ float procesar(int opc,int flag_p,int number1){
 
 	return 0;
 
+=======
+
+			break;
+		case 11:
+			break;
+		default:
+		printf("Operacion no valida \n");
+	}
+
+	return 0;
+
+>>>>>>> 1aceadc1c42710d1d573561c244f73fe833272c2
 }
 
 int main (int argc, char** argv){
