@@ -20,7 +20,7 @@ void print_hoja(){
 		printf("\n");
 	}
 }
-void procesar(int flag_p,int number1)
+void procesar(int flag_p,float number1)
 {
 	int i,k;
 	float resultado=0;
@@ -50,6 +50,7 @@ void procesar(int flag_p,int number1)
 		case 2:
 				if(flag_p==0){
 					hoja[fila[0]][columna[0]]=0;
+					print_hoja();
 				}
 				else if((columna [0]<columna [1]&&fila[0]==fila[1])||(columna [0]==columna [1]&&fila[0]<fila[1])||flag_p==-1)
 				{
@@ -71,6 +72,7 @@ void procesar(int flag_p,int number1)
 		case 3:
 				if(flag_p==0){
 					hoja[fila[0]][columna[0]]=number1;
+					print_hoja();
 				}
 				else if((columna [0]<columna [1]&&fila[0]==fila[1])||(columna [0]==columna [1]&&fila[0]<fila[1])||flag_p==-1)
 				{
@@ -253,14 +255,13 @@ int main (int argc, char** argv){
 	 				}
 	 				else if((operacion[i]==' '||isdigit((unsigned char)operacion[i])!=0)&&flag==5&&opc==3)
 	 				{
-	 					for (k = i; k <strlen(operacion)-1; ++k)
+	 					for (k = i; k <strlen(operacion)-1; k++)
 	 					{
 	 						temp[ 0 ] = operacion[k]; 
 							temp[ 1 ] = '\0'; 
  							strcat(aux2,temp);
  							i=k;
 	 					}
-	 					printf("%.s", aux2);
 	 					number1=atof(aux2);
 	 					if(number1!=0){
 	 						flag=6;
