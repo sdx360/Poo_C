@@ -6,42 +6,42 @@
 int miebros[4];
 float **m_aportacion;
 char **m_nombres[4];
+float **v_combinaciones;
 int v[4]={1,1,1,1};
-
+int cont=0;
 
 void utilidades(){
 	int i;
 	float total=0;
-	//printf("[%d]\t[%d]\t[%d]\t[%d]\n",v[0],v[1],v[2],v[3]);
 	for (i = 0; i < 4; ++i)
 	{
 		total+=m_aportacion[i][v[i]-1];
 	}
-	printf("Utilidad minima: %.2f\n", total);
-	printf("%s[%.2f]\t%s[%.2f]\t%s[%.2f]\t%s[%.2f]\n\n",m_nombres[0][v[0]-1],m_aportacion[0][v[0]-1],m_nombres[1][v[1]-1],m_aportacion[1][v[1]-1],m_nombres[2][v[2]-1],m_aportacion[2][v[2]-1],m_nombres[3][v[3]-1],m_aportacion[3][v[3]-1]);
+	for (i = 0; i < 4; ++i)
+	{
+		v_combinaciones[cont][i]=v[i]-1;
+	}
+	v_combinaciones[cont][4]=total;
+	cont++;
 }
-
-int combinaciones(int aux){
+	
+void combinaciones(int aux){
 	aux++;
 	int i;
 	for (i = 0; i < miebros[aux]; ++i)
 	{
 		v[aux]=i+1;
 		if(aux<(sizeof(miebros) / sizeof(miebros[0])-1)){
-			//printf("------------------------------------\n");
 			combinaciones(aux);
 		}
 		else{
-			
 			utilidades();
 		}
 	}
-return 0;
 }
 
 void error(){
 	printf("\nError! La sintaxis es \"./Castores -e1 nombre1 aportación1 nombre2 aportacion2 [nombre3 aportacion3] -e2 ..\"\n\n" );
-
 }
 int nombre(char nomb[]){
 	int k;
@@ -135,22 +135,38 @@ int comprobar_e(char *equipos[],char *argv[],int c){
 		return 1;
 }
 
-void reservar_matriz(int rows){
+int reservar_matriz(int rows){
 	
-	int i;
+	int i,t_comb=1;
 	m_aportacion=(float**) malloc(rows*sizeof(float*));
-	for (i = 0; i < rows; ++i)
-	{
-
-		m_aportacion[i]=(float*)malloc(miebros[i]*sizeof(float));
-		m_nombres[i]=(char**) malloc(miebros[i]*sizeof(char*));
-		if(!m_aportacion[i]){
+	if(!m_aportacion){
 		fprintf(stderr,"Error in Memory Matrix!\n"); 
 		exit(-1);
 		}
-
+	for (i = 0; i < rows; ++i)
+	{
+		m_aportacion[i]=(float*)malloc(miebros[i]*sizeof(float));
+		m_nombres[i]=(char**) malloc(miebros[i]*sizeof(char*));
+		t_comb*=miebros[i];
+		if(!m_aportacion[i]&&!m_nombres[i]){
+		fprintf(stderr,"Error in Memory Matrix!\n"); 
+		exit(-1);
+		}
 	}
-
+	v_combinaciones=(float**) malloc(t_comb*sizeof(float*));
+	if(!v_combinaciones){
+		fprintf(stderr,"Error in Memory Matrix!\n"); 
+		exit(-1);
+		}
+	for (i = 0; i < t_comb; ++i)
+	{
+		v_combinaciones[i]=(float*) malloc(5*sizeof(float));
+		if(!v_combinaciones[i]){
+		fprintf(stderr,"Error in Memory Matrix!\n"); 
+		exit(-1);
+		}
+	}
+return t_comb;
 }
 void llenar_matriz(char *argv[]){
 	int i,j,pos=3;
@@ -164,14 +180,60 @@ void llenar_matriz(char *argv[]){
 		}
 		pos++;
 	}
-
 }
-
+void min_max(int t_comb) {
+	int i,j;
+	float mayor=v_combinaciones[0][4], menor=v_combinaciones[0][4];
+	for (i = 0; i < t_comb; ++i)
+	{
+		if(v_combinaciones[i] [4]>mayor){
+			mayor=v_combinaciones [i] [4];
+		}
+		if(v_combinaciones[i] [4]<menor){
+			menor=v_combinaciones [i] [4];
+		}
+	}
+	for (i = 0; i < t_comb; ++i)
+	{
+		if(menor==v_combinaciones[i][4]){
+			printf("Utilidad Minima: $%.2f\n",v_combinaciones[i][4]);
+			for (j = 0; j < 4; ++j)
+			{
+			printf("%s ($%.2f)\t",m_nombres[j][(int)v_combinaciones[i][j]],m_aportacion[j][(int)v_combinaciones[i][j]]);
+			}
+			printf("\n\n");
+		}
+	
+	}
+	printf("\n\n");
+	for (i = 0; i < t_comb; ++i)
+	{
+		if(mayor==v_combinaciones[i][4]){
+			printf("Utilidad Maxima: $%.2f\n",v_combinaciones[i][4]);
+			for (j = 0; j < 4; ++j)
+			{
+			printf("%s ($%.2f)\t",m_nombres[j][(int)v_combinaciones[i][j]],m_aportacion[j][(int)v_combinaciones[i][j]]);
+			}
+			printf("\n\n");
+		}
+	
+	}
+}
+void imp_matriz(){
+	int i,j;
+	for (i = 0; i < 4; ++i)
+			{
+				for (j = 0; j < miebros[i]; ++j)
+				{
+					printf("%s (%.2f)\t",m_nombres[i][j],m_aportacion[i][j]);
+				}
+				printf("\n");
+			}
+}
 int main(int argc, char *argv[])
 {
-	int i,j,aux=-1;
+	int aux=-1,t_comb;
 	char *equipos[5]={"-e1","-e2","-e3","-e4"};
-	
 
 	system("clear");
 	if( argc < 21 || argc >29 )
@@ -180,24 +242,15 @@ int main(int argc, char *argv[])
 	}
 	else{
 		if(comprobar_e(equipos,argv,argc)!=0){
-			for (i = 0; i < 4; ++i)
-			{
-				//printf("%d\n", miebros[i]);
-			}
+			
 			printf("\n");
-			reservar_matriz(4);
+			t_comb=reservar_matriz(4);
 		
 			llenar_matriz(argv);
-			for (i = 0; i < 4; ++i)
-			{
-				for (j = 0; j < miebros[i]; ++j)
-				{
-					printf("%s (%.2f)\t",m_nombres[i][j],m_aportacion[i][j]);
-				}
-				printf("\n");
-			}
-			printf("\n\n");
+			imp_matriz();
+			printf("\n\n\n");
 			combinaciones(aux);
+			min_max(t_comb);
 
 		}
 		else{
