@@ -21,7 +21,9 @@ void utilidades(){
 	{
 		v_combinaciones[cont][i]=v[i]-1;
 	}
+
 	v_combinaciones[cont][4]=total;
+	
 	cont++;
 }
 	
@@ -193,10 +195,11 @@ void min_max(int t_comb) {
 			menor=v_combinaciones [i] [4];
 		}
 	}
+	printf("Utilidad Minima: $%.2f\n\n",menor);
 	for (i = 0; i < t_comb; ++i)
 	{
+		
 		if(menor==v_combinaciones[i][4]){
-			printf("Utilidad Minima: $%.2f\n",v_combinaciones[i][4]);
 			for (j = 0; j < 4; ++j)
 			{
 			printf("%s ($%.2f)\t",m_nombres[j][(int)v_combinaciones[i][j]],m_aportacion[j][(int)v_combinaciones[i][j]]);
@@ -206,10 +209,12 @@ void min_max(int t_comb) {
 	
 	}
 	printf("\n\n");
+	printf("Utilidad Maxima: $%.2f\n\n",mayor);
 	for (i = 0; i < t_comb; ++i)
 	{
+		//
 		if(mayor==v_combinaciones[i][4]){
-			printf("Utilidad Maxima: $%.2f\n",v_combinaciones[i][4]);
+			
 			for (j = 0; j < 4; ++j)
 			{
 			printf("%s ($%.2f)\t",m_nombres[j][(int)v_combinaciones[i][j]],m_aportacion[j][(int)v_combinaciones[i][j]]);
