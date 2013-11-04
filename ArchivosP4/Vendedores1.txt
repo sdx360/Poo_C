@@ -1,0 +1,16 @@
+5
+GRP
+Gabriela Ramírez Pérez
+4	4	1.383
+LHH
+Lázaro Hernández Huerta
+0	9	1.045
+ICH
+Ismael Chávez Hernández
+5	6	1.137
+SZC
+Silvia Zamora Castillo
+8	3	0.982
+FHZ
+Francisco Hernández Zamora
+1	2	1.448

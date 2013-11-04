@@ -10,7 +10,7 @@
 #include <string.h>
 #include <sys/time.h>
 #include <regex.h>
-int **muñecas;
+
 typedef struct
 {
 	int *tamaño;
@@ -27,20 +27,13 @@ int evaluar(char a[], char b[]){
 
 void reservar_matriz(int rows){
 	
-	int i;
-	muñecas=(int**) malloc(rows*sizeof(int*));
-	if(!muñecas){
+	
+	tamaño=(int*) malloc(rows*sizeof(int));
+	if(!tamaño){
 		fprintf(stderr,"Error in Memory Matrix!\n"); 
 		exit(-1);
 		}
-	for (i = 0; i < rows; ++i)
-	{
-		muñecas[i]=(int*)malloc(3*sizeof(int));
-		if(!muñecas[i]){
-		fprintf(stderr,"Error in Memory Matrix!\n"); 
-		exit(-1);
-		}
-	}
+	
 
 }
 
@@ -88,8 +81,7 @@ int main(int argc, char const *argv[])
 			if(strcmp(texto,"0")==0){break;}
 			strcpy(buffer, &texto[2]);
 			
-
-
+			
 			char *t1;
 			pos=0;
 			for ( t1 = strtok(buffer," ");
@@ -97,13 +89,11 @@ int main(int argc, char const *argv[])
 	      	t1 = strtok(NULL, " ") );
 			
 
-			//printf("%s\n", buffer);
-
 		};
 		fclose(archivo);
 
 		
-		sprintf( nombre, "%s.out\n", strtok(argv[2],"."));
+		sprintf( nombre, "%s.out", strtok(argv[2],"."));
 		printf("%s\n", nombre);
 		guardar_archivo(nombre,texto);
 		

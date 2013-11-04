@@ -1,0 +1,13 @@
+4
+MMR
+Manuel Mar Ramos
+8	2	1.182
+HRG
+Hugo Rolón Garrido
+9	9	1.454
+AVG
+Arturo Villanueva Guerrero
+0	5	0.988
+FAP
+Federico Alonso Pecina
+7	6	1.072
