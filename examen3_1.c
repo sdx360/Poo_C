@@ -1,7 +1,7 @@
 #include <stdlib.h> 
 #include <stdio.h>
 #include <string.h>
-
+#include <regex.h>
 typedef struct 
 {
 	int *id;
@@ -12,6 +12,25 @@ dato *res(){
 	return datos=(dato*)malloc(2*sizeof(dato));
 	
 }
+int evaluar(char a[],char b[]){
+	regex_t regex;
+	int re;
+
+	re=regcomp(&regex,a,REG_EXTENDED);
+	return re=regexec(&regex, b, 0, NULL, 0);
+
+}
+char* substr(char* cadena, int comienzo, int longitud)
+{
+	if (longitud == 0) longitud = strlen(cadena)-comienzo-1;
+	
+	char *nuevo = (char*)malloc(sizeof(char) * longitud);
+	
+	strncpy(nuevo, cadena + comienzo, longitud);
+	
+	return nuevo;
+}
+
 void imprimir(){
 
 	printf("%d%d%d\n", datos[0].id[0],datos[0].id[1],datos[0].id[2]);
@@ -51,5 +70,8 @@ int main(int argc, char const *argv[])
 	datos[1].id[2]=3;
 
 	imprimir();
+	if(evaluar("^[-+]?([0-9]+)$","23")==0){
+			printf("match\n" );
+			}
 	return 0;
 }
