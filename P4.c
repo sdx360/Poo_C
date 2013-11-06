@@ -190,7 +190,6 @@ void costo(){
 	if(total<solucion.total||solucion.total==0){
 		solucion.total=total;
 		strcpy(solucion.asignaciones, temp);
-		//printf("%.3f\t%s\n", total,temp);
 	}
 	
 }
@@ -225,25 +224,24 @@ int main(int argc, char *argv[])
 	FILE *archivo1=NULL,*archivo2=NULL;
 	char nombre[200];
 	int combinaciones=1,i;
-
+	argv[3][strlen(argv[3])-1]='\0';
 	if(argc==4&&strcmp(argv[1],"-FILES")==0)
 	{
 		if(((archivo1=fopen(argv[2],"r"))==NULL)||((archivo2=fopen(argv[3],"r"))==NULL)){
 			error();
 		}
-		//printf("%s\n",argv[2]);		
-		llenar(archivo1,'p');	
-		//printf("\n%s\n",argv[3]);
+		
+		llenar(archivo1,'p');
 		llenar(archivo2,'v');	
-		//printf("\n");
+
 		asignar();
+
 		for (i = 1; i <=m; ++i)
 		{
 			combinaciones=(combinaciones*(n-i+1))/i;
 		}
+
 		costo();
-		//imprimir();
-		//printf("\n");
 		srand(getpid());
 		for (i = 1; i <combinaciones; ++i)
 		{
@@ -253,9 +251,11 @@ int main(int argc, char *argv[])
 				
 		
 		sprintf( nombre, "%s_%s.out", strtok(argv[2],"."), strtok(argv[3],"."));
-		//printf("\n\n%s\n", nombre);
+
 		guardar_archivo(nombre);
+		
 		fclose(archivo1);
+		fclose(archivo2);
 		
 	}
 	else{error();}
