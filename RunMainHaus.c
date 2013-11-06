@@ -45,13 +45,6 @@ void calculo(){
 	}
 	salida.med=media/31;
 }
-void imprimir(){
-	int i;
-	for (i = 0; i < 31; ++i)
-	{
-		printf("%.3f\n", vector[i]);
-	}
-}
 int main(int argc, char const *argv[])
 {
 	char texto[200],nombre[200];
@@ -66,13 +59,13 @@ int main(int argc, char const *argv[])
 			error();
 		}
 		do{
-		fscanf(archivo1,"%[^\n]\n",texto);
+		fscanf(archivo1,"%[^\n\r]\n|\r",texto);
 		
 			
 			t1=strtok(texto,"\t");
 			t2=strtok(NULL,"\t");
-		sprintf(nombre, "./P4.exe -FILES %s %s",t1,t2);
-		printf("%s\n", nombre);
+		sprintf(nombre, "./MainHaus -FILES %s %s",t1,t2);
+		printf("%s-%s\n", t1,t2);
 			for (i = 0; i < 31; ++i)
 			{
 				system(nombre);
@@ -101,6 +94,6 @@ int main(int argc, char const *argv[])
 
 	end=CurrentTime();
 	seconds=(end-start);
-	printf("\n\nSegundos: %.5f\tReloj de computadora:%.10f\n",seconds,seconds/(double)CLOCKS_PER_SEC);
+	printf("Segundos: %.5f\tReloj de computadora:%.10f\n",seconds,seconds/(double)CLOCKS_PER_SEC);
 	return 0;
 }

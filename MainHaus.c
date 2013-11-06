@@ -193,13 +193,7 @@ void costo(){
 	}
 	
 }
-void imprimir(){
-	int i;
-	for (i = 0; i < n; ++i)
-	{
-		printf("%d\t", vector[i]);
-	}
-}
+
 void switchpos(){
 	int i,j,temp;
 	do{
@@ -210,7 +204,6 @@ void switchpos(){
 	}
 	
 }while(vector[i]==vector[j]);
-	//printf("%d\t%d\n", vector[i],vector[j]);
 	temp=vector[i];
 	vector[i]=vector[j];
 	vector[j]=temp;
@@ -219,28 +212,23 @@ void switchpos(){
 int main(int argc, char *argv[])
 {
 	//system("clear");
-	double start, end,seconds;
-	start=CurrentTime();
+	//double start, end,seconds;
+	//start=CurrentTime();
 	FILE *archivo1=NULL,*archivo2=NULL;
 	char nombre[200];
 	int combinaciones=1,i;
-	argv[3][strlen(argv[3])-1]='\0';
 	if(argc==4&&strcmp(argv[1],"-FILES")==0)
 	{
 		if(((archivo1=fopen(argv[2],"r"))==NULL)||((archivo2=fopen(argv[3],"r"))==NULL)){
 			error();
 		}
-		
 		llenar(archivo1,'p');
 		llenar(archivo2,'v');	
-
 		asignar();
-
 		for (i = 1; i <=m; ++i)
 		{
 			combinaciones=(combinaciones*(n-i+1))/i;
 		}
-
 		costo();
 		srand(getpid());
 		for (i = 1; i <combinaciones; ++i)
@@ -248,20 +236,16 @@ int main(int argc, char *argv[])
 		switchpos();
 		costo();	
 		}
-				
-		
 		sprintf( nombre, "%s_%s.out", strtok(argv[2],"."), strtok(argv[3],"."));
-
 		guardar_archivo(nombre);
-		
 		fclose(archivo1);
 		fclose(archivo2);
 		
 	}
 	else{error();}
 
-	end=CurrentTime();
-	seconds=(end-start);
+	//end=CurrentTime();
+	//seconds=(end-start);
 	//printf("\n\nSegundos: %.5f\tReloj de computadora:%.10f\n",seconds,seconds/(double)CLOCKS_PER_SEC);
    return 0;
 }
