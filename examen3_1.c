@@ -12,6 +12,23 @@ dato *res(){
 	return datos=(dato*)malloc(2*sizeof(dato));
 	
 }
+char* tok(char* cadena, char token[])
+{
+	char *t1;
+	char *nuevo;
+	int longitud;
+	longitud = strlen(cadena);
+	nuevo = (char*)malloc(sizeof(char) * longitud);
+
+	for ( t1 = strtok(cadena,token);
+	      t1 != NULL;
+	      t1 = strtok(NULL, token) )
+		  printf("------------%s\n",t1);
+
+	
+	return nuevo;
+}
+
 int evaluar(char a[],char b[]){
 	regex_t regex;
 	int re;
