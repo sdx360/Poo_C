@@ -11,7 +11,7 @@ int main(int argc, char const *argv[])
 	char texto[200],nombre[200];
 	char *t1,*t2;
 	int i; 
-	system("clear");
+	system("cls");
 	FILE *archivo1=NULL,*archivo2=NULL;
 	if(argc==3&&strcmp(argv[1],"-FILE")==0){
 		if((archivo1=fopen(argv[2],"r"))==NULL){
