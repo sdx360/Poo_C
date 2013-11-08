@@ -71,8 +71,21 @@ double CurrentTime(){
   gettimeofday(&tv, 0);
   return (tv.tv_sec + tv.tv_usec/1000000.0);
 }
-void error(){
-	printf("Error al abrir el archivo\n");
+void error(int opc){
+	switch(opc){
+		case 1:printf("Error al abrir el archivo\n");
+		break;
+		case 2:printf("Sintaxis incorrecta\n");
+		break;
+		case 3:printf("tiene que ser un archivo .txt\n");
+		break;
+	}
+	FILE *pt;
+ 	if((pt=fopen("Error.txt","a"))==NULL){
+ 		error(1);
+ 	}
+ 	fprintf(pt, "Error\n");
+ 	fclose(pt);
 	exit(-1);
 }
  void memory(int row,char opc){
@@ -98,7 +111,7 @@ void error(){
 void guardar_archivo(char a[]){
  	FILE *pt;
  	if((pt=fopen(a,"a"))==NULL){
- 		error();
+ 		error(1);
  	}
  	fprintf(pt, "%.3f\t%s\n", solucion.total,solucion.asignaciones);
  	fclose(pt);
@@ -107,7 +120,7 @@ void llenar(FILE *archivo1,char opc){
 int pos=0;
 char texto[200];
 	fscanf(archivo1,"%[^\n]\n",texto);
-		if(evaluar("^[0-9]+",texto)!=0){error();}
+		if(evaluar("^[0-9]+",texto)!=0){error(1);}
 		
 		switch(opc) {
 			case 'p':
@@ -215,12 +228,17 @@ int main(int argc, char *argv[])
 	//double start, end,seconds;
 	//start=CurrentTime();
 	FILE *archivo1=NULL,*archivo2=NULL;
+	char *resp;
 	char nombre[200];
 	int combinaciones=1,i;
+	resp=strstr( argv[2], ".txt" );
+	if(resp==NULL){
+   		error(3);
+   	}
 	if(argc==4&&strcmp(argv[1],"-FILES")==0)
 	{
 		if(((archivo1=fopen(argv[2],"r"))==NULL)||((archivo2=fopen(argv[3],"r"))==NULL)){
-			error();
+			error(1);
 		}
 		llenar(archivo1,'p');
 		llenar(archivo2,'v');	
@@ -242,7 +260,7 @@ int main(int argc, char *argv[])
 		fclose(archivo2);
 		
 	}
-	else{error();}
+	else{error(2);}
 
 	//end=CurrentTime();
 	//seconds=(end-start);
